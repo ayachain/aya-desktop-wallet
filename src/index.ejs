@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Main</title>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_742518_7ya5uuamst6.css">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        -webkit-touch-callout:none;  /*系统默认菜单被禁用*/
+        -webkit-user-select:none; /*webkit浏览器*/
+        -khtml-user-select:none; /*早期浏览器*/
+        -moz-user-select:none;/*火狐*/
+        -ms-user-select:none; /*IE10*/
+        user-select:none;
+      }
+      input {
+        -webkit-user-select:auto; /*webkit浏览器*/
+      }
+      textarea {
+        -webkit-user-select:auto; /*webkit浏览器*/
+      }
+      ul, li {
+        list-style: none;
+      }
+    </style>
+    <% if (htmlWebpackPlugin.options.nodeModules) { %>
+      <!-- Add `node_modules/` to global paths so `require` works properly in development -->
+      <script>
+        require('module').globalPaths.push('<%= htmlWebpackPlugin.options.nodeModules.replace(/\\/g, '\\\\') %>')
+      </script>
+    <% } %>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- Set `__static` path to static files in production -->
+    <% if (!process.browser) { %>
+      <script>
+        if (process.env.NODE_ENV !== 'development') window.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+      </script>
+    <% } %>
+
+    <!-- webpack builds are automatically injected -->
+  </body>
+</html>

@@ -1,0 +1,116 @@
+@font-face{
+  font-family: 'bold';
+  src: url('../font/GOTHAMRND-BOLD.OTF');
+}
+
+@font-face{
+  font-family: 'boldita';
+  src: url('../font/GOTHAMRND-BOLDITA.OTF');
+}
+
+@font-face{
+  font-family: 'book';
+  src: url('../font/GOTHAMRND-BOOK.OTF');
+}
+
+@font-face{
+  font-family: 'bookita';
+  src: url('../font/GOTHAMRND-BOOKITA.OTF');
+}
+
+@font-face{
+  font-family: 'light';
+  src: url('../font/GOTHAMRND-LIGHT.OTF');
+}
+
+@font-face{
+  font-family: 'xlight';
+  src: url('../font/Gotham-XLight.otf');
+}
+
+@font-face{
+  font-family: 'lightita';
+  src: url('../font/GOTHAMRND-LIGHTITA.OTF');
+}
+
+@font-face{
+  font-family: 'medita';
+  src: url('../font/GOTHAMRND-MEDITA.OTF');
+}
+
+@font-face{
+  font-family: 'medium';
+  src: url('../font/GOTHAMRND-MEDIUM.OTF');
+}
+
+.bold {
+  font-family: 'bold' !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.boldita {
+  font-family: 'boldita' !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.book {
+  font-family: 'book' !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.bookita {
+  font-family: 'bookita' !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.light {
+  font-family: 'light' !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.xlight {
+  font-family: 'xlight' !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.lightita {
+  font-family: 'lightita' !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.medita {
+  font-family: 'medita' !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.medium {
+  font-family: 'medium' !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
