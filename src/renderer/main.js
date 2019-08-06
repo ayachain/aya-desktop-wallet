@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import axios from 'axios'
 
 import App from './App'
 import router from './router'
@@ -10,8 +9,8 @@ import './assets/icon/iconfont.css'
 Vue.use(ElementUI)
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
-Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
+Vue.prototype.$defaultProvide = 'http://192.168.0.134:5001/api/v0/aya'
 Vue.prototype.$ = (arg) => {
   return new GetDom(arg)
 }
@@ -77,15 +76,4 @@ function GetDom () {
       })
     }
   }
-}
-
-Vue.prototype.localShell = (provide, chainId) => {
-  this.$http({
-    method: 'post',
-    url: `http://192.168.0.134:5001/api/v0/aya/keystore/new?arg=${this.password}`
-  }).then(result => {
-    console.log(result)
-  }).catch(err => {
-    console.error(err)
-  })
 }

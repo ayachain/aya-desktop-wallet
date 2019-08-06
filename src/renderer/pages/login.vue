@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import KeyStoreApi from '../aya-core-api/keystore'
+
 export default {
   data () {
     return {
@@ -28,13 +30,18 @@ export default {
       repassword: ''
     }
   },
+  beforeCreate () {
+    let address = localStorage.getItem('address')
+    if (address) {
+      this.$router.push({ path: '/home' })
+    }
+  },
   methods: {
     createWallet () {
-      this.$http({
-        method: 'post',
-        url: `http://192.168.0.134:5001/api/v0/aya/keystore/new?arg=${this.password}`
-      }).then(result => {
-        console.log(result)
+      let api = new KeyStoreApi(this.$defaultProvide)
+      api.new('main').then(result => {
+        localStorage.setItem('address', result.data.Body)
+        this.$router.push({ path: '/home' })
       }).catch(err => {
         console.error(err)
       })

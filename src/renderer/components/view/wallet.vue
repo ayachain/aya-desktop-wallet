@@ -54,6 +54,7 @@
 
 <script>
 import Dialog from '../public/dialog'
+import KeyStoreApi from '../../aya-core-api/keystore'
 
 export default {
   name: 'wallet',
@@ -63,6 +64,7 @@ export default {
       loading: false,
       dialog: false,
       scrollTop: 0,
+      api: new KeyStoreApi(this.$defaultProvoid),
       cards: [
         {
           name: 'Name',
@@ -327,6 +329,13 @@ export default {
   beforeRouteEnter (to, from, next) {
     next(vm => {
       document.querySelector('.el-main').scrollTop = vm.scrollTop
+    })
+  },
+  mounted () {
+    this.api.list().then(result => {
+      console.log(result)
+    }).catch(err => {
+      console.error(err)
     })
   },
   methods: {
