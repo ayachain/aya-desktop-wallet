@@ -19,7 +19,7 @@
         menus: [
           {
             icon: 'iconfont icon-wallet',
-            routerLint: () => this.$router.push({ path: '/home' })
+            routerLint: () => this.$router.push({ path: '/home/wallet' })
           },
           {
             icon: 'iconfont icon-key',

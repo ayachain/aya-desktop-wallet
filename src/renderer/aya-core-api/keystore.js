@@ -1,24 +1,30 @@
 import axios from 'axios'
 import ArgumentsEscape from './common'
 
-class KeyStoreApi {
+class KeyStoreAPI {
   constructor (provide, chainId) {
     this.provide = provide
     this.chainId = chainId
   }
 
-  delete (data) {
-    let params = ArgumentsEscape(data)
+  delete (address, passphrase) {
+    let params = ArgumentsEscape({
+      arg: [address, passphrase]
+    })
     return axios.post(`${this.provide}/keystore/delete?${params}`)
   }
 
-  export (data) {
-    let params = ArgumentsEscape(data)
+  export (address, passphrase, kspassphrase) {
+    let params = ArgumentsEscape({
+      arg: [address, passphrase, kspassphrase]
+    })
     return axios.post(`${this.provide}/keystore/export?${params}`)
   }
 
-  import (data) {
-    let params = ArgumentsEscape(data)
+  import (keystore, passphrase) {
+    let params = ArgumentsEscape({
+      arg: [keystore, passphrase]
+    })
     return axios.post(`${this.provide}/keystore/import?${params}`)
   }
 
@@ -50,4 +56,4 @@ class KeyStoreApi {
   }
 }
 
-export default KeyStoreApi
+export default KeyStoreAPI

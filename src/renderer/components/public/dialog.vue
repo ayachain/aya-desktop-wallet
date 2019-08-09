@@ -1,20 +1,20 @@
 <template>
   <el-dialog id="dialog" center :title="title" :visible.sync="isOpen" :width="width" :before-close="close">
     <section id="sendDialog">
-      <el-form label-position="top" label-width="80px" :model="formLabelAlign">
+      <el-form label-position="top" label-width="80px">
         <el-form-item label="From" id="from">
-          <el-input v-model="formLabelAlign.name" @focus="focus" @blur="blur">
+          <el-input v-model="from" disabled>
             <img slot="prepend" src="../../assets/earth.png">
           </el-input>
         </el-form-item>
         <el-form-item label="To" id="to">
-          <el-input v-model="formLabelAlign.region" @focus="focus" @blur="blur">
+          <el-input v-model="to" @focus="focus" @blur="blur">
             <img slot="prepend" src="../../assets/earth.png">
           </el-input>
         </el-form-item>
         <el-form-item label="Amount" id="amount">
           <el-input
-            v-model="formLabelAlign.type"
+            v-model="value"
             @focus="focus('', $event)"
             @blur="blur('', $event)"
           >
@@ -23,7 +23,7 @@
         </el-form-item>
         <el-form-item id="fee" style="margin-right: 50px" label="Fee">
           <el-input
-            value="0.058"
+            :value="fee"
             readonly="readonly"
           >
             <template slot="append">AC</template>
@@ -42,21 +42,21 @@
       <section class="confirm-section">
         <div>
           <img src="../../assets/earth.png">
-          <span class="xlight">0x12345678...998765432123578</span>
+          <span class="xlight">{{ `${from.slice(0, 10)}...${from.slice(-15)}` }}</span>
           <span class="light">From</span>
         </div>
         <i class="iconfont icon-arrow"></i>
         <div>
           <img src="../../assets/earth.png">
-          <span class="xlight">0x12345678...998765432123578</span>
+          <span class="xlight">{{ `${to.slice(0, 10)}...${to.slice(-15)}` }}</span>
           <span class="light">To</span>
         </div>
       </section>
       <ul class="confirm-ul">
         <li class="book"><span>Amount</span><span>Steps</span></li>
-        <li class="xlight"><span>10000.00 AC</span><span>20000 S</span></li>
+        <li class="xlight"><span>{{ Number(value).toFixed(2) }} AC</span><span>20000 S</span></li>
         <li class="book"><span>Fee</span><span>Prices</span></li>
-        <li class="xlight"><span>0.058 AC</span><span>0.0001 AC</span></li>
+        <li class="xlight"><span>{{ fee }} AC</span><span>0.0001 AC</span></li>
       </ul>
       <section class="confirm-data">
         <span class="book">Data</span>
@@ -64,16 +64,16 @@
       </section>
       <p class="confirm-total">
         <span class="book">Total</span>
-        <span class="medium">- 10000.512 AC</span>
+        <span class="medium">{{ Number(value) + Number(fee) }} AC</span>
       </p>
       <section class="confirm-footer">
         <div>
           <i class="iconfont icon-key"></i>
-          <input class="xlight" placeholder="Enter password to Confirm the transaction" type="text">
+          <input v-model="password" @input="change" class="xlight" placeholder="Enter password to Confirm the transaction" type="text">
         </div>
         <section>
-          <el-button type="text">cancel</el-button>
-          <el-button type="primary">Confirm</el-button>
+          <el-button type="text" @click="close" style="margin-right: 20px">Cancel</el-button>
+          <el-button type="primary" @click="submit" :disabled="disabled">Confirm</el-button>
         </section>
       </section>
     </section>
@@ -81,21 +81,24 @@
 </template>
 
 <script>
+import { TranstionAPI, Transtion } from '../../aya-core-api/transtion'
+
 export default {
-  props: ['isOpen'],
+  props: ['isOpen', 'from'],
   data () {
     return {
+      api: new TranstionAPI(this.$defaultProvide, 'main'),
       title: 'Transfer accounts',
-      width: '802px',
-      formLabelAlign: {
-        name: '',
-        region: '',
-        type: ''
-      }
+      width: '980px',
+      to: '',
+      value: '',
+      fee: 150000 / 1e8,
+      password: '',
+      disabled: true
     }
   },
   methods: {
-    toggleDialog () {
+    async toggleDialog () {
       this.title = 'Confirmation'
       setTimeout(() => {
         this.width = '542px'
@@ -103,14 +106,33 @@ export default {
       this.$('#sendDialog').fadeToggle(100, 'hide')
       this.$('#confirmDialog').fadeToggle(100, 'show')
     },
+    async submit () {
+      let value = this.value * 1e8
+      let tras = await Transtion.NewTransfer(this.from, this.to, value, this.password)
+      if (await tras.Sign()) {
+        let rawHex = tras.toHexString()
+        this.api.publish(rawHex).then(result => {
+          console.log(result)
+        }).catch(e => {
+          console.error(e)
+        })
+      }
+    },
     close () {
       this.$emit('close', false)
       setTimeout(() => {
         this.title = 'Transfer accounts'
-        this.width = '802px'
+        this.width = '980px'
         this.$('#sendDialog').fadeToggle(100, 'show')
         this.$('#confirmDialog').fadeToggle(100, 'hide')
       }, 200)
+    },
+    change () {
+      if (this.password.length > 0) {
+        this.disabled = false
+      } else {
+        this.disabled = true
+      }
     },
     focus (prev, next) {
       if (next) {
@@ -258,7 +280,7 @@ export default {
   justify-content: space-between;
 }
 .el-input {
-  width: 360px;
+  width: 450px;
   height: 50px;
   img {
     width: 32px;

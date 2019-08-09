@@ -12,11 +12,22 @@ export default new Router({
     {
       path: '/home',
       component: require('@/pages/home').default,
+      redirect: '/home/wallet',
       children: [
         {
-          path: '',
-          component: require('@/components/view/wallet').default,
-          meta: { keepAlive: true }
+          path: 'wallet',
+          component: require('@/components/view/wallet/wallet').default,
+          children: [
+            {
+              path: '',
+              component: require('@/components/view/wallet/children/index').default,
+              meta: { keepAlive: true }
+            },
+            {
+              path: 'detail',
+              component: require('@/components/view/wallet/children/detail').default
+            }
+          ]
         },
         {
           path: 'key',
