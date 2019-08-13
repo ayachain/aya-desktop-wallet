@@ -54,7 +54,7 @@
       </section>
       <ul class="confirm-ul">
         <li class="book"><span>Amount</span><span>Steps</span></li>
-        <li class="xlight"><span>{{ Number(value).toFixed(2) }} AC</span><span>20000 S</span></li>
+        <li class="xlight"><span>{{ (+value).toFixed(2) }} AC</span><span>20000 S</span></li>
         <li class="book"><span>Fee</span><span>Prices</span></li>
         <li class="xlight"><span>{{ fee }} AC</span><span>0.0001 AC</span></li>
       </ul>
@@ -64,7 +64,7 @@
       </section>
       <p class="confirm-total">
         <span class="book">Total</span>
-        <span class="medium">{{ Number(value) + Number(fee) }} AC</span>
+        <span class="medium">{{ (+value) + (+fee) }} AC</span>
       </p>
       <section class="confirm-footer">
         <div>

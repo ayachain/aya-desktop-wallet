@@ -36,6 +36,10 @@ export default new Router({
         {
           path: 'phone',
           component: require('@/components/view/phone').default
+        },
+        {
+          path: 'node',
+          component: require('@/components/view/node').default
         }
       ]
     },

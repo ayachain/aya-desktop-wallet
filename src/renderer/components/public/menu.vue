@@ -36,7 +36,8 @@
             icon: 'el-icon-setting'
           },
           {
-            icon: 'iconfont icon-internet'
+            icon: 'iconfont icon-internet',
+            routerLint: () => this.$router.push({ path: '/home/node' })
           }
         ]
       }
